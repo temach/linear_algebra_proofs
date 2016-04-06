@@ -1,0 +1,206 @@
+\documentclass[a4paper,12pt]{article}
+
+% Packages required by doxygen
+\usepackage[export]{adjustbox} % also loads graphicx
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{makeidx}
+\usepackage[table]{xcolor}
+\usepackage{hyperref} % for math mode in section titles
+\usepackage{fixltx2e} % for math mode in section titles
+\usepackage{amsmath, amsthm, amssymb}    % for maths formulae nice display
+
+% NLS support packages
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+% Font selection
+\usepackage[T1]{fontenc}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{amssymb}
+
+% Page & text layout
+\usepackage{geometry}
+\geometry{%
+  a4paper,%
+  top=2.5cm,%
+  bottom=2.5cm,%
+  left=2.5cm,%
+  right=2.5cm%
+}
+%\setlength{\emergencystretch}{15pt}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.2cm}
+
+% Headers & footers
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhead[LE]{\fancyplain{}{\bfseries\thepage}}
+\fancyhead[CE]{\fancyplain{}{\scriptsize\textbf{RU.17701729.503200 ТЗ 01-1-ЛУ}}}
+\fancyhead[RE]{\fancyplain{}{}}
+\fancyhead[LO]{\fancyplain{}{}}
+\fancyhead[CO]{\fancyplain{}{\scriptsize\textbf{RU.17701729.503200 ТЗ 01-1-ЛУ}}}
+\fancyhead[RO]{\fancyplain{}{\bfseries\thepage}}
+\fancyfoot[LE]{\fancyplain{}{}}
+\fancyfoot[CE]{\fancyplain{}{}}
+\fancyfoot[RE]{\fancyplain{}{}}
+\fancyfoot[LO]{\fancyplain{}{}}
+\fancyfoot[CO]{\fancyplain{}{}}
+\fancyfoot[RO]{\fancyplain{}{}}
+
+% Indices & bibliography
+\usepackage{natbib}
+\usepackage[titles]{tocloft}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{5}
+\makeindex
+
+% change style of titles in \section{}
+\usepackage{titlesec}
+\titleformat{\section}[hang]{\Large\bfseries\center}{\thetitle.}{1em}{}
+\titleformat{\subsection}[hang]{\large\normalfont\raggedright}{\thetitle.}{1em}{\underline}
+\titleformat{\subsubsection}[hang]{\normalsize\normalfont\raggedright}{\thetitle.}{1pt}{}
+
+% Packages for text layout in normal mode
+% \usepackage[parfill]{parskip} % автоматом делает пустые линии между параграфами, там где они есть в тексте
+% \usepackage{indentfirst} % indent even in first paragraph
+\usepackage{setspace}	 % controls space between lines
+\setstretch{1} % space between lines
+\setlength\parindent{0.9cm} % size of indent for every paragraph
+\usepackage{csquotes}% превратить " " в красивые двойные кавычки
+\MakeOuterQuote{"}
+
+
+% this makes items spacing single-spaced in enumerations.
+\newenvironment{my_enumerate}{
+\begin{enumerate}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}}{\end{enumerate}
+}
+
+
+% Custom commands
+
+
+% Custom packages
+\usepackage{pdfpages}
+
+\makeindex
+
+%===== C O N T E N T S =====
+
+\begin{document}
+
+% Titlepage & ToC
+\pagenumbering{roman}
+
+\begin{titlepage}
+\begin{center}
+\vspace*{0.7cm}
+{\large ПРАВИТЕЛЬСТВО РОССИЙСКОЙ ФЕДЕРАЦИИ \\
+НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ УНИВЕРСИТЕТ \\
+«ВЫСШАЯ ШКОЛА ЭКОНОМИКИ» }\\
+\vspace*{0.2cm}
+Факультет компьютерных наук \\
+\smallskip
+{\small Департамент программнoй инженерии \\
+}
+\vspace{1cm}
+
+{\textbf{Спасалка по линейной алгебре}} \\
+\medskip
+
+Москва \number\year \\
+\end{center}
+\end{titlepage}
+
+\newpage
+
+{\large Ну понять–то оно понятно}
+
+\newpage
+\tableofcontents
+\pagenumbering{arabic}
+
+\newpage
+
+% --- add my custom headers ---
+\section{1 Сформулировать и доказать теорему о методе Гаусса}
+Любую матрицу можно привести к ступенчатому виду с помощью элементарных преобразований.
+В доказательство предъявим алгоритм, который гарантированно завершится для конечных матриц:
+\begin{my_enumerate}
+\item[Шаг 1]
+\begin{my_enumerate}
+\item Фиксируем элемент в верхнем левом углу $ a_{ij} $
+\item Если $a_{ij} = 0$ : переходим к шагу 2. \\
+Иначе объявляем этот элемент ведущим.
+\item Используя ведущий элемент будем добиваемся того, что элементы во всех строках ниже него обнуляются. Если $ a_{ij} $ - ведущий, то сложим строки $ k, ( k \neq i ) $ и $i$. Причем строку $i$ домножим на $ \lambda = - \frac{a_{kj}}{a_{ij}}$.
+\item Смещаемся в матрице на строку вниз и на столбец вправо. Переходим к шагу 1. (пока не закончится матрица)
+\end{my_enumerate}
+
+\item[Шаг 2] Если текущий элемент нулевой, просматриваем все элементы под ним: Если найдем ненулевой в строке $k$ то меняем строки $k$ и $i$ местами и переходим к шагу 1. Если все нулевые переходим к шагу 3.
+
+\item[Шаг 3] Переходим на один столбец вправо. Если справа есть столбцы переходим к шагу 1. Если столбцы закончились - конец алгоритма. 
+
+\end{my_enumerate}
+
+
+\section{46 Проведите полное исследование уравнения \texorpdfstring{$ Ax^2 + Cy^2 + Dx + Ey + F = 0, A^2 + C^2 > 0$}{TEXT} кривой второго порядка}
+
+Сначала перепишем уравнение в более хорошей форме:
+\[
+    A \left(  x^2 + 2\frac{D}{2A}x + \frac{D^2}{4A^2}  \right) - \frac{D^2}{4A} 
++ C \left(  y^2 + 2\frac{E}{2C}y + \frac{E^2}{4C^2}  \right) - \frac{E^2}{4C}
++ F = 0 
+\]
+
+\[
+    A \left( x + \frac{D}{2A} \right) ^2 
++ C \left( y + \frac{E}{2C}  \right) ^2 
++ \left( F - \frac{E^2}{4C}  - \frac{D^2}{4A} \right) = 0
+\]
+
+Для параллельного переноса координат, сделаем замену 
+$x' = x + \frac{D}{2A}$, а также 
+$y' = y + \frac{E}{2C}$. 
+Заодно заменим константу:
+$F' = F - \frac{E^2}{4C}  - \frac{D^2}{4A}$
+\[
+A(x')^2 + C(y')^2 + F' = 0
+\]
+\[
+A(x')^2 + C(y')^2 = - F'
+\]
+
+Теперь рассмотрим 3 варианта:
+\begin{my_enumerate}
+%============================
+\item[Вариант 1] $AC > 0$
+\begin{my_enumerate}
+\item[$F' = 0$]  $ \implies Ax'^2 + Cy'^2 = 0 \iff x'^2 = 0, y'^2 = 0$. То есть решение это точка на плоскости $x = - \frac{D}{2A}, y = - \frac{E}{2C}$.
+\item[$F' \neq 0$] $ \implies \frac{x'^2}{-F' / A} +  \frac{y'^2}{-F' / C} = 1$ (Разделили на $ - F'$ и перенесли коэффициенты $A, C$ вниз).
+
+
+
+
+\end{my_enumerate}
+
+%============================
+\item[AC < 0]
+
+%============================
+\item[AC = 0]
+
+\end{my_enumerate}
+
+% Index
+\newpage
+% \phantomsection
+% \addcontentsline{toc}{section}{Алфавитный указатель}    
+\printindex
+
+\end{document}
