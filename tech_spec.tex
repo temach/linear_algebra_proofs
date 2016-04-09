@@ -39,10 +39,10 @@
 \usepackage{fancyhdr}
 \pagestyle{fancyplain}
 \fancyhead[LE]{\fancyplain{}{\bfseries\thepage}}
-\fancyhead[CE]{\fancyplain{}{\scriptsize\textbf{RU.17701729.503200 ТЗ 01-1-ЛУ}}}
+\fancyhead[CE]{\fancyplain{}{\scriptsize\textbf{Ну понять-то оно понятно}}}
 \fancyhead[RE]{\fancyplain{}{}}
 \fancyhead[LO]{\fancyplain{}{}}
-\fancyhead[CO]{\fancyplain{}{\scriptsize\textbf{RU.17701729.503200 ТЗ 01-1-ЛУ}}}
+\fancyhead[CO]{\fancyplain{}{\scriptsize\textbf{Ну понять-то оно понятно}}}
 \fancyhead[RO]{\fancyplain{}{\bfseries\thepage}}
 \fancyfoot[LE]{\fancyplain{}{}}
 \fancyfoot[CE]{\fancyplain{}{}}
@@ -89,7 +89,12 @@
 % Custom packages
 \usepackage{pdfpages}
 
+\usepackage{pgfplots}
+
 \makeindex
+
+% arrows as stealth fighters
+\tikzset{>=stealth}
 
 %===== C O N T E N T S =====
 
@@ -111,7 +116,7 @@
 }
 \vspace{1cm}
 
-{\textbf{Спасалка по линейной алгебре}} \\
+{\textbf{Линейная алгебра}} \\
 \medskip
 
 Москва \number\year \\
@@ -119,8 +124,6 @@
 \end{titlepage}
 
 \newpage
-
-{\large Ну понять–то оно понятно}
 
 \newpage
 \tableofcontents
@@ -147,6 +150,50 @@
 \item[Шаг 3] Переходим на один столбец вправо. Если справа есть столбцы переходим к шагу 1. Если столбцы закончились - конец алгоритма. 
 
 \end{my_enumerate}
+
+\section{45 Дайте определение параболы как геометрического места точек. Выведите  ее каноническое уравнение.}
+Геометрические точки задающие параболу равноудалены от фокуса пораболы и директрисы.
+В каноническом уравнении параболы:
+\begin{enumerate}
+\item[] Фокус  – точка $ F(p/2, 0) $. 
+\item[] Директриса – вертикальная прямая $L$ заданная 
+уравнением: $ x = -p/2 $.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+            axis lines=middle,
+            axis line style=->,
+            xmin=-8,xmax=8,
+            ymin=-5,ymax=5,
+            xlabel=$x$,
+            ylabel=$y$,
+            xtick=\empty,
+            ytick=\empty,
+            xticklabels=\empty,
+            yticklabels=\empty,
+        ]
+        \addplot[smooth,thick, blue,-]({x^2},{x});
+        \addplot[smooth,thick, red,-]({-2},{x})
+        [yshift=105pt, xshift=-25pt]            
+            node[pos=0] {$L \left( -\frac{p}{2}, 0 \right)$}
+        ;      
+        \addplot+[only marks, red] coordinates{(2,0) (4,2)}
+        [yshift=10pt, xshift=12pt]            
+            node[pos=0] {$F \left(\frac{p}{2}, 0 \right)$}
+            node[pos=1] {$ M(x,y) $}
+        ;
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\smallskip 
+
+Пусть $\rho(A,B) $ – дистанция между точками $A$ и $B$. Рассмотрим точку $M(x,y)$. Точка $M\in$
+параболе $\iff$ выполнятся соотношение
+$\rho(F,M) = \rho(F,L)$. Перепишем уравнение относительно 
+координат:
 
 
 \section{46 Проведите полное исследование уравнения \texorpdfstring{$ Ax^2 + Cy^2 + Dx + Ey + F = 0, A^2 + C^2 > 0$}{TEXT} кривой второго порядка}
@@ -176,26 +223,89 @@ A(x')^2 + C(y')^2 + F' = 0
 A(x')^2 + C(y')^2 = - F'
 \]
 
-Теперь рассмотрим 3 варианта:
-\begin{my_enumerate}
+Теперь рассмотрим 3 варианта (будем строит дерево вариантов):
+\begin{enumerate}
 %============================
 \item[Вариант 1] $AC > 0$
-\begin{my_enumerate}
-\item[$F' = 0$]  $ \implies Ax'^2 + Cy'^2 = 0 \iff x'^2 = 0, y'^2 = 0$. То есть решение это точка на плоскости $x = - \frac{D}{2A}, y = - \frac{E}{2C}$.
-\item[$F' \neq 0$] $ \implies \frac{x'^2}{-F' / A} +  \frac{y'^2}{-F' / C} = 1$ (Разделили на $ - F'$ и перенесли коэффициенты $A, C$ вниз).
+\begin{enumerate}
+\item  $ F' = 0 \implies Ax'^2 + Cy'^2 = 0 \iff x'^2 = 0, y'^2 = 0$. То есть решение это точка на 
+плоскости $x = - \frac{D}{2A}, y = - \frac{E}{2C}$.
 
+\item $ F' \neq 0 \implies \frac{x'^2}{-F' / A} +  \frac{y'^2}{-F' / C} = 1$ (Разделили на $ - F'$ и перенесли коэффициенты $A, C$ вниз). 
+\begin{enumerate}
+\item $ F' < 0 \implies  (-F' / A) > 0 , (-F' / C)  > 0 $. 
+Решение можо переписать в виде $ \frac{x^2}{a^2} + \frac{y^2}{b^2} = 1 $. Это эллипс.
+\item $ F' > 0 \implies -F' < 0 $. Так как рассматриваем 
+$ AC > 0 $ следовательно решение для $ A(x')^2 + C(y')^2 = - F' $ это пустое множество. 
+\end{enumerate}
 
+\end{enumerate}
 
-
-\end{my_enumerate}
-
+\bigskip
 %============================
-\item[AC < 0]
+\item[Вариант 2] $AC < 0$
+\begin{enumerate}
+\item  $ F' = 0 \implies Ax'^2 + Cy'^2 = 0 $. 
+Разложим по $ ( a^2 - b^2 ) = (a - b)(a + b) $. 
+Получим $ (\sqrt{|A|}x' - \sqrt{|C|}y')(\sqrt{|A|}x' + \sqrt{|C|}y') = 0 
+\iff
+\sqrt{|A|}x' = \sqrt{|C|}y', \, \sqrt{|A|}x' = - \sqrt{|C|}y' $.
+ Это пара прямых на плоскости.
 
+\item $ F' \neq 0 \implies \frac{x'^2}{-F' / A} +  \frac{y'^2}{-F' / C} = 1$ 
+\begin{enumerate}
+\item $  F' > 0 и (A < 0, C > 0) \implies  (-F' / A) > 0,  (-F' / C)  < 0 $. 
+Решение можо переписать в виде $ \frac{x^2}{a^2} - \frac{y^2}{b^2} = 1 $. 
+Это гипербола.
+\item $ F' < 0 и (A > 0, C < 0) \implies   (-F' / A) < 0,  (-F' / C)  > 0 $. 
+Решение можно переписать в виде $ - \frac{x^2}{a^2} + \frac{y^2}{b^2} = 1 $. 
+Это сопряженная гипербола.
+\end{enumerate}
+
+\end{enumerate}
+
+\bigskip
 %============================
-\item[AC = 0]
+\item[Вариант 3] $AC = 0 $
 
-\end{my_enumerate}
+\begin{enumerate}
+
+\item $ A \neq 0, C = 0 \implies Ax^2 + Dx + Ey + F = 0 $ \\
+Выделим полный квадрат по $x$:
+\[
+A \left( x + \frac{D}{2A} \right)^2 + Ey + F - \frac{D^2}{4A} = 0
+\]
+Введем 
+$ F' = F - \frac{D}{4A} \implies A \left( x + \frac{D}{2A} \right)^2 = -Ey - F' $
+
+\begin{enumerate}
+\item Если $ E =  0 \implies A \left( x + \frac{D}{2A} \right)^2 = -F' $
+\begin{enumerate}
+\item $F' = 0 \implies \left( x + \frac{D}{2A} \right)^2 = 0 $. 
+Это вертикальная прямая $ x = \frac{-D}{2A} $
+\item $ F' \neq 0 $ Перепишем уравнение в виде 
+$ \left( x + \frac{D}{2A} \right)^2 = \frac{-F'}{A} $ \\
+При $ signF' = signA \implies \frac{-F'}{A} < 0 \implies \emptyset $.  \\
+При $ signF' = - signA  \implies x = \pm \sqrt{\frac{-F'}{A}} - \frac{D}{2A} $. Это пара вертикальных прямых.
+\end{enumerate}
+
+\item Если $ E \neq 0 \implies A \left( x + \frac{D}{2A} \right)^2 = -E( y + \frac{F'}{E} ) $.
+Осуществим параллельный перенос системы координат 
+$ x' = x + \frac{D}{2A}, y' = y + \frac{F'}{E} $. Получим:
+\[
+{x'}^2 = - \frac{E}{A} y'  \iff y' = - \frac{A}{E} {x'}^2
+\]
+Это парабола (обыкновенная, вдоль оси $y$)
+\end{enumerate}
+
+\item $ A = 0, C \neq 0 \implies Cy^2 + Dx + Ey + F = 0  $ \\
+Разбор случая полностью аналогичен предыдущему. Вертикальные линии станут горизонтальными. Парабола будет вдоль оси х.
+\end{enumerate}
+\end{enumerate}
+
+
+
+
 
 % Index
 \newpage
